@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資安簡報內容架構產生器 v1.0.0 — by 資安小麻雀</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{box-sizing:border-box;}
+.scrollbar-thin::-webkit-scrollbar{width:5px;height:5px;}
+.scrollbar-thin::-webkit-scrollbar-track{background:transparent;}
+.scrollbar-thin::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:10px;}
+body{font-size:11pt;}
+.sel-btn{transition:all 0.18s;font-size:10.5pt;padding:4px 11px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;cursor:pointer;white-space:nowrap;}
+.sel-btn:hover{border-color:#6366f1;background:#f8fafc;color:#4338ca;}
+.sel-btn.active{border-color:#6366f1;background:#eef2ff;color:#4338ca;font-weight:700;box-shadow:0 1px 3px rgba(99,102,241,.15);}
+.sel-btn.sec{border-color:#0891b2;background:#ecfeff;color:#0e7490;}
+.sel-btn.sec.active,.sel-btn.sec:hover{border-color:#0891b2;background:#cffafe;color:#164e63;}
+.sel-btn.sec.active{font-weight:700;}
+.sel-btn.warn{background:#f97316!important;color:#fff!important;border-color:#f97316!important;font-weight:700;}
+.sel-btn.warn:hover{background:#ea580c!important;}
+.lang-tab{padding:5px 16px;border-radius:6px;border:1px solid #e2e8f0;font-size:10.5pt;font-weight:600;cursor:pointer;background:#fff;color:#64748b;transition:all .15s;}
+.lang-tab.active{background:#1e293b;color:#fff;border-color:#1e293b;}
+.lang-tab:not(.active):hover{border-color:#6366f1;color:#4338ca;}
+.zone-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:8px;margin-bottom:14px;font-size:10.5pt;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
+.zone-blue{background:#eef2ff;color:#4338ca;border-left:3px solid #6366f1;}
+.zone-green{background:#f0fdf4;color:#166534;border-left:3px solid #22c55e;}
+.group-label{font-size:10pt;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;align-items:center;}
+.preset-card{border:1px solid #a5f3fc;background:#ecfeff;border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .18s;text-align:left;width:100%;}
+.preset-card:hover{border-color:#0891b2;background:#cffafe;}
+.preset-card.active{border-color:#0891b2;background:#cffafe;box-shadow:0 0 0 2px #a5f3fc;}
+.preset-card .pt{font-size:10.5pt;font-weight:700;color:#0e7490;}
+.preset-card .pd{font-size:9.5pt;color:#64748b;margin-top:2px;}
+.toggle-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;margin-bottom:14px;}
+.toggle-row input{width:15px;height:15px;cursor:pointer;accent-color:#f59e0b;}
+.src-btn{flex:1;padding:8px 6px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;transition:all .18s;text-align:center;font-size:10pt;font-weight:600;color:#64748b;line-height:1.4;}
+.src-btn:hover{border-color:#6366f1;background:#f8fafc;color:#4338ca;}
+.src-btn.active{border-color:#6366f1;background:#eef2ff;color:#4338ca;font-weight:700;}
+textarea{width:100%;font-size:10.5pt;font-family:inherit;background:#fff;color:#1e293b;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;outline:none;resize:none;transition:border-color .15s;}
+textarea:focus{border-color:#6366f1;box-shadow:0 0 0 2px #eef2ff;}
+.smart-toggle{display:flex;align-items:center;gap:5px;cursor:pointer;color:#6366f1;font-weight:700;font-size:10pt;}
+.smart-toggle input{width:14px;height:14px;cursor:pointer;accent-color:#6366f1;}
+hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
+</style>
+</head>
+<body class="h-screen bg-slate-50 flex flex-col font-sans text-slate-900 overflow-hidden">
+
+<header class="shrink-0 py-2 px-4 border-b border-slate-200 bg-white shadow-sm z-10">
+  <div class="flex items-center justify-between">
+    <h1 class="text-base font-black text-slate-800 flex items-center gap-2 flex-wrap">
+      <span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10.5pt] tracking-tighter shadow-sm">🐦</span>
+      資安簡報內容架構產生器
+      <span class="text-[10pt] text-slate-400 font-normal">v1.0.0</span>
+      <span class="text-[10pt] text-indigo-400 font-semibold">by 資安小麻雀</span>
+      <span class="inline-flex items-center gap-1 bg-cyan-50 text-cyan-700 border border-cyan-200 rounded-full px-2 py-0.5 text-[9.5pt] font-semibold">🔒 ISMS／PIMS 專業版</span>
+    </h1>
+    <button id="reset-btn" class="sel-btn warn flex items-center gap-1 text-[10pt] ml-2">
+      <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> 重置
+    </button>
+  </div>
+</header>
+
+<main class="flex-grow flex overflow-hidden p-2 gap-0" id="container">
+  <div id="left-panel" class="h-full flex flex-col shrink-0 overflow-hidden border border-slate-200 rounded-l-lg bg-white shadow-sm" style="flex-basis:56%;">
+    <div class="flex-grow overflow-y-auto p-3 scrollbar-thin">
+      <div class="max-w-2xl mx-auto">
+
+        <!-- 語言切換 -->
+        <div class="mb-4 pb-4 border-b border-slate-100">
+          <div class="group-label">🌐 輸出語言</div>
+          <div class="flex gap-2" id="lang-tabs">
+            <button class="lang-tab active" data-lang="zh">中文</button>
+            <button class="lang-tab" data-lang="en">English</button>
+            <button class="lang-tab" data-lang="bilingual">中英並列</button>
+          </div>
+        </div>
+
+        <!-- ZONE 1 -->
+        <div class="zone-bar zone-blue"><i data-lucide="file-text" class="w-4 h-4"></i> 第一區：內容策略</div>
+
+        <div class="group-label">0. 資料來源</div>
+        <div class="flex gap-2 mb-4" id="src-btns">
+          <button class="src-btn active" data-src="notebooklm">📚 Notebook LM<br>來源</button>
+          <button class="src-btn" data-src="web">🌐 網際網路<br>搜尋</button>
+          <button class="src-btn" data-src="both">📚＋🌐 來源<br>＋網路搜尋</button>
+        </div>
+
+        <div class="group-label">🔒 資安專屬快選包 <span class="text-slate-400 font-normal normal-case text-[9.5pt]">— 一鍵帶入最佳設定</span></div>
+        <div class="grid grid-cols-2 gap-2 mb-4" id="preset-grid"></div>
+
+        <div class="toggle-row">
+          <input type="checkbox" id="mandate-cb">
+          <label for="mandate-cb" class="cursor-pointer flex items-center gap-2 w-full text-[10.5pt] font-bold text-amber-800">
+            ⚠️ 加入系統強制指令
+            <span class="text-[9.5pt] text-amber-600 font-normal ml-auto">確保輸出格式一致、術語版本正確</span>
+          </label>
+        </div>
+
+        <div class="group-label">✏️ 內容主題 / 核心目標</div>
+        <textarea id="inp-title" rows="2" class="mb-3" placeholder="例如：員工個資保護意識訓練、ISO 27001 導入說明、釣魚郵件防範宣導..."></textarea>
+
+        <div class="group-label">📋 主題大綱 <span class="text-slate-400 font-normal normal-case text-[9.5pt]">（可選填）</span></div>
+        <textarea id="inp-outline" rows="3" class="mb-3" placeholder="例如：&#10;1. 產業現況分析&#10;2. 法規要求重點&#10;3. 員工行為規範"></textarea>
+
+        <div class="group-label" style="color:#0891b2;">📰 時事新聞案例 <span class="text-slate-400 font-normal normal-case text-[9.5pt]">（可選填，AI 將融入開場 Hook）</span></div>
+        <textarea id="inp-news" rows="2" class="mb-4" style="border-color:#a5f3fc;background:#f0fdff;" placeholder="貼入新聞標題或摘要，AI 將自動融入開場 Hook 或佐證章節..."></textarea>
+
+        <div class="group-label flex justify-between"><span>1. 內容類型</span><label class="smart-toggle"><input type="checkbox" id="smart-cb"> 智慧建議</label></div>
+        <div class="chip-row" id="grp-types"></div>
+
+        <div class="group-label">2. 角色設定</div>
+        <div class="chip-row" id="grp-roles"></div>
+
+        <div class="group-label">3. 邏輯架構</div>
+        <div class="chip-row" id="grp-structures"></div>
+
+        <div class="group-label">4. 語氣風格</div>
+        <div class="chip-row" id="grp-tones"></div>
+
+        <div class="group-label">5. 目標受眾 <span class="text-cyan-600 font-normal normal-case text-[9.5pt]">🔒 = 資安專屬</span></div>
+        <div class="chip-row" id="grp-audiences"></div>
+
+        <div class="group-label">6. 適用法規框架 <span class="text-slate-400 font-normal normal-case text-[9.5pt]">（可複選）</span></div>
+        <div class="chip-row" id="grp-regulations"></div>
+
+        <div class="group-label">7. 加分要求 <span class="text-slate-400 font-normal normal-case text-[9.5pt]">（可複選）</span></div>
+        <div class="chip-row" id="grp-requirements"></div>
+
+        <div class="group-label">8. 限定輸出格式</div>
+        <div class="chip-row" id="grp-formats"></div>
+
+        <div class="group-label">9. 文字數量限制</div>
+        <div class="chip-row" id="grp-wordcounts"></div>
+
+        <div class="group-label">📝 額外要求 / 特殊指示</div>
+        <textarea id="inp-notes" rows="3" class="mb-6" placeholder="特定章節需求、關鍵字限制、法規條文引用細節..."></textarea>
+
+        <hr class="zone-div">
+
+        <!-- ZONE 2 -->
+        <div class="zone-bar zone-green"><i data-lucide="palette" class="w-4 h-4"></i> 第二區：視覺設計</div>
+
+        <div class="group-label">10. 投影片比例</div>
+        <div class="chip-row" id="grp-ratios"></div>
+
+        <div class="group-label">11. 頁數規劃</div>
+        <div class="chip-row" id="grp-pagecounts"></div>
+
+        <div class="group-label">12. 每頁資訊密度</div>
+        <div class="chip-row" id="grp-densities"></div>
+
+        <div class="group-label">13. 版面排版風格</div>
+        <div class="chip-row" id="grp-layouts"></div>
+
+        <div class="group-label">14. 插圖 &amp; 圖表風格</div>
+        <div class="chip-row" id="grp-illustrations"></div>
+
+        <div class="group-label">15. 字型風格</div>
+        <div class="chip-row" id="grp-fonts"></div>
+
+        <div class="group-label">16. 視覺風格與配色 <span class="text-cyan-600 font-normal normal-case text-[9.5pt]">🔒 = 資安專屬</span></div>
+        <div class="chip-row" id="grp-visuals"></div>
+
+        <div class="pb-4"></div>
+
+        <!-- Footer -->
+        <div class="text-center py-4 border-t border-slate-100">
+          <p class="text-[9.5pt] text-slate-400">
+            資安簡報內容架構產生器 v1.0.0 &nbsp;·&nbsp; by <span class="text-indigo-400 font-semibold">資安小麻雀 🐦</span>
+          </p>
+          <p class="text-[8.5pt] text-slate-300 mt-1">
+            參考來源：「觀點LAB」內容架構產生器 V1.0
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="resizer" class="w-1 h-full cursor-col-resize bg-slate-200 hover:bg-indigo-400 transition-colors flex items-center justify-center shrink-0 group">
+    <div class="w-px h-10 bg-slate-400 group-hover:bg-indigo-400 rounded-full"></div>
+  </div>
+
+  <div id="right-panel" class="h-full flex-1 min-w-0 flex flex-col border border-slate-800 rounded-r-lg shadow-xl bg-slate-900">
+    <div class="px-3 py-1.5 bg-slate-800 flex justify-between items-center border-b border-slate-700 shrink-0">
+      <div class="flex items-center gap-3">
+        <span class="text-[10.5pt] text-slate-400 font-mono tracking-widest uppercase">Drafting Prompt</span>
+        <span class="flex items-center gap-1 text-[10pt] text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span> LIVE</span>
+      </div>
+      <button id="copy-btn" class="text-[10.5pt] font-bold bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1 rounded transition-all active:scale-95 shadow-md flex items-center gap-2 uppercase tracking-tight">
+        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Prompt
+      </button>
+    </div>
+    <div class="p-5 overflow-y-auto flex-grow font-mono text-[10.5pt] text-indigo-100/90 leading-relaxed scrollbar-thin">
+      <pre id="prompt-output" class="whitespace-pre-wrap"></pre>
+    </div>
+  </div>
+</main>
+
+<script>
+const CFG = {
+  secPresets:[
+    {id:'isms-training',title:'🔒 ISMS 教育訓練',desc:'ISO 27001 合規 × 員工意識培訓',
+     d:{type:'course',role:'tech',structure:'pyramid',tone:'professional',audience:'staff',format:'slide-pages',wordCount:'long',visual:'business',ratio:'169',density:'balanced',layout:'magazine',illustration:'data-viz',font:'sans',regulations:['iso27001'],requirements:['hook','analogy','data-driven','visual','cta-smart'],mandate:true}},
+    {id:'pims-awareness',title:'🛡️ 個資宣導簡報',desc:'PIMS × 個資法 × 日常行為規範',
+     d:{type:'course',role:'psycho',structure:'golden-circle',tone:'empathy',audience:'staff',format:'slide-pages',wordCount:'medium',visual:'fresh',ratio:'169',density:'light',layout:'bento',illustration:'flat',font:'rounded',regulations:['pipa','iso27701'],requirements:['hook','analogy','cta-smart','visual','gold-sentence'],mandate:true}},
+    {id:'news-case',title:'📰 時事案例分析',desc:'新聞事件 × 資安教訓 × 情境代入',
+     d:{type:'outline',role:'strategist',structure:'scqa',tone:'provoke',audience:'public',format:'slide-pages',wordCount:'medium',visual:'tech',ratio:'169',density:'balanced',layout:'split',illustration:'line',font:'sans',regulations:[],requirements:['hook','data-driven','gold-sentence','cta-smart'],mandate:true}},
+    {id:'digital-footprint',title:'👣 數位足跡宣導',desc:'個人隱私 × 社群風險 × 行為建議',
+     d:{type:'infographic',role:'psycho',structure:'problem-solution',tone:'provoke',audience:'public',format:'slide-pages',wordCount:'short',visual:'minimal',ratio:'169',density:'light',layout:'bento',illustration:'flat',font:'rounded',regulations:[],requirements:['hook','analogy','visual','gold-sentence','cta-smart'],mandate:true}},
+    {id:'exec-risk',title:'📊 高層風險簡報',desc:'資安風險 × 法遵成本 × 決策支援',
+     d:{type:'report_deck',role:'biz-analyst',structure:'pyramid',tone:'professional',audience:'execs',format:'slide-pages',wordCount:'framework',visual:'premium',ratio:'169',density:'dense',layout:'timeline',illustration:'data-viz',font:'serif',regulations:['iso27001','pipa'],requirements:['data-driven','cta-smart','visual'],mandate:true}}
+  ],
+  types:[
+    {id:'outline',label:'簡報製作',p:'你是一位專業策略顧問。請生成一份邏輯嚴密、結構完整的簡報大綱與視覺建議。'},
+    {id:'course',label:'教學簡報',p:'你是一位教學設計專家。請設計一套針對教學目標、循序漸進的教學簡報大綱。'},
+    {id:'youtube',label:'YT 流量企劃',p:'你是一位百萬訂閱影音策略大師。請規劃一份高點閱潛力、高留存率的影片企劃。'},
+    {id:'script',label:'影音腳本',p:'你是一位資深編劇。請規劃一份節奏感強、適合拍攝的腳本。'},
+    {id:'social',label:'社群貼文',p:'你是一位社群行銷專家。請規劃具備高互動潛力、符合社群語境的貼文。'},
+    {id:'infographic',label:'懶人包',p:'你是一位資訊圖表專家。請設計一份資訊高度濃縮、視覺引導強烈的懶人包架構。'},
+    {id:'report_deck',label:'報告型簡報',p:'你是一位商業分析師。請規劃一份以數據為核心、結論導向的專業報告型簡報大綱。'}
+  ],
+  roles:[
+    {id:'strategist',label:'策略顧問',p:'你擅長結構化思維與商業邏輯拆解。'},
+    {id:'lecturer',label:'學術教授',p:'你擅長將複雜知識拆解為易於吸收的教學體系。'},
+    {id:'psycho',label:'心理學家',p:'你擅長分析受眾認知偏誤與情緒觸點，降低溝通阻力。'},
+    {id:'tech',label:'資安技術專家',p:'你擅長資訊安全架構、威脅分析與合規框架，能將技術細節轉化為管理層可理解的語言。'},
+    {id:'biz-analyst',label:'商業分析師',p:'你擅長數據建模、風險量化與產業趨勢研判。'}
+  ],
+  structures:[
+    {id:'pyramid',label:'金字塔',p:'採取「結論先行」原則，先給核心建議，再逐層展開論據。'},
+    {id:'scqa',label:'SCQA',p:'使用 SCQA（情境→衝突→問題→答案）架構，特別適合以真實資安事件開場。'},
+    {id:'golden-circle',label:'黃金圈',p:'使用 Why-How-What 架構，先說明「為什麼資安重要」再帶出具體作法。'},
+    {id:'problem-solution',label:'問題解決',p:'以「痛點分析 → 解決方案 → 效益與合規要求」編排。'},
+    {id:'aida',label:'AIDA',p:'遵循注意→興趣→慾望→行動路徑，適合宣導與短簡報。'}
+  ],
+  tones:[
+    {id:'professional',label:'專業嚴謹',p:'文字嚴謹、權威且具備邏輯性，符合企業正式場合。'},
+    {id:'empathy',label:'溫暖共情',p:'語氣柔和且具備同理心，降低員工對資安規範的抵觸感。'},
+    {id:'inspiring',label:'啟發鼓舞',p:'語氣帶有願景感，激發員工主動守護資訊安全的熱情。'},
+    {id:'humor',label:'幽默風趣',p:'輕鬆幽默，加入生活化梗，讓枯燥的資安知識更易吸收。'},
+    {id:'provoke',label:'犀利反思',p:'大膽質疑現狀，語氣犀利，讓受眾意識到現有行為的風險。'},
+    {id:'urgent',label:'緊迫警示',p:'語氣帶有適度緊迫感，強調不合規的後果，催促立即行動。'}
+  ],
+  audiences:[
+    {id:'staff',label:'🔒 一般員工',p:'目標為非技術背景員工。禁止堆砌專業術語，改用日常情境類比，強調個人行為對公司的影響。'},
+    {id:'it-sec',label:'🔒 IT / 資安人員',p:'目標為 IT 或資安從業者。可深入技術架構、威脅模型與合規細節，使用業界標準術語。'},
+    {id:'execs',label:'🔒 高階主管',p:'目標為決策層。聚焦「法遵風險、財務損失、聲譽衝擊」，提供量化數據與清晰決策建議，不涉及技術細節。'},
+    {id:'child',label:'幼兒',p:'目標為幼兒。使用極度簡單詞彙，完全口語化，多用故事與角色，避免抽象概念，每個重點配合生動圖示說明。'},
+    {id:'university',label:'大學生',p:'目標為高知識大學生。可接受概念深度與批判性思考，語氣現代不說教，可引用學術研究或國際案例。'},
+    {id:'layman',label:'入門新手',p:'用大白話解釋，嚴禁術語，多用生活化案例，讓外行人一看就懂。'},
+    {id:'public',label:'一般大眾',p:'結合時事與共鳴點，語氣親民具娛樂性，提供即學即用的實用價值。'}
+  ],
+  regulations:[
+    {id:'iso27001',label:'ISO 27001',p:'依據 ISO 27001:2022 資訊安全管理系統標準框架。'},
+    {id:'iso27701',label:'ISO 27701',p:'依據 ISO 27701:2019 隱私資訊管理系統（PIMS）擴展要求。'},
+    {id:'pipa',label:'個人資料保護法',p:'依據中華民國個人資料保護法相關規定。'},
+    {id:'gdpr',label:'GDPR',p:'依據歐盟一般資料保護規則（GDPR）國際標準。'},
+    {id:'nist',label:'NIST CSF',p:'依據 NIST 網路安全框架（CSF 2.0）五大核心功能。'},
+    {id:'twgov',label:'政府資安法',p:'依據資通安全管理法及各機關資安相關法規。'}
+  ],
+  requirements:[
+    {id:'hook',label:'吸引 Hook',p:'開場必須包含一個極具衝擊力的 Hook（可用真實資安事件或反問句）。'},
+    {id:'gold-sentence',label:'金句提煉',p:'每個主要章節提煉出一句具備傳播力的短句，適合截圖分享。'},
+    {id:'analogy',label:'生活類比',p:'將核心概念轉換為生活化類比，幫助非技術受眾理解。'},
+    {id:'data-driven',label:'數據支撐',p:'在關鍵論點旁預留「數據支撐」位置，標註可引用的統計數據類型。'},
+    {id:'visual',label:'視覺建議',p:'每頁標註建議的視覺呈現方式（流程圖、對比表、數字放大等），包含構圖細節。'},
+    {id:'cta-smart',label:'CTA（SMART）',p:'結尾包含具體且可執行的行動呼籲，必須符合 SMART 原則（具體、可衡量、可達成、相關、有時限）。'},
+    {id:'qa',label:'常見 Q&A',p:'附上 3-5 個受眾最常提出的問題與標準回答，預備現場 Q&A 使用。'},
+    {id:'scenario',label:'情境模擬',p:'加入一個具體的情境模擬案例（如：收到釣魚郵件時的完整應對流程）。'},
+    {id:'checklist',label:'行為檢核表',p:'附上可直接使用的行為檢核清單，讓員工自我評估合規程度。'}
+  ],
+  formats:[
+    {id:'slide-pages',label:'簡報分頁',p:'以「投影片 [編號]：[標題]」格式呈現，每頁附版面配置建議與視覺元素說明。'},
+    {id:'dual-col',label:'雙欄腳本',p:'使用表格呈現，左欄為畫面說明，右欄為講師逐字稿。'},
+    {id:'threads',label:'社群貼文串',p:'拆解為適合社群的系列短文格式（每則 200 字以內）。'},
+    {id:'transcript',label:'講師逐字稿',p:'擴展為包含語助詞、過渡語、互動提問的完整講師逐字稿。'},
+    {id:'framework',label:'完整框架文件',p:'輸出含章節標題、核心論點、視覺建議、講師備注的完整框架文件。'}
+  ],
+  wordCounts:[
+    {id:'short',label:'短篇 500',p:'總字數控制在約 500 字（精要版）。'},
+    {id:'medium',label:'中篇 1K',p:'提供約 1000 字深度（標準版）。'},
+    {id:'long',label:'長篇 2K',p:'總字數達 2000 字左右（完整版）。'},
+    {id:'flexible',label:'不限篇幅',p:'依內容需要自行決定篇幅長短。'},
+    {id:'framework',label:'完整框架',p:'輸出含章節標題與核心論點的完整框架，不限字數。'}
+  ],
+  ratios:[
+    {id:'169',label:'16:9 寬螢幕',p:'投影片採用 16:9 標準寬螢幕比例。'},
+    {id:'43',label:'4:3 標準',p:'投影片採用 4:3 傳統標準比例。'},
+    {id:'portrait',label:'直式 9:16',p:'投影片採用直式 9:16（適合手機 / 社群）比例。'}
+  ],
+  pageCounts:[
+    {id:'5',label:'5 頁',p:'全簡報控制在 5 頁以內（超精簡版）。'},
+    {id:'10',label:'10 頁',p:'全簡報規劃約 10 頁（標準版）。'},
+    {id:'15',label:'15 頁',p:'全簡報規劃約 15 頁（完整版）。'},
+    {id:'20',label:'20 頁',p:'全簡報規劃約 20 頁以上（深度版）。'}
+  ],
+  densities:[
+    {id:'light',label:'少字大圖',p:'每頁以視覺為主，文字控制在 20 字以內，大量留白，讓圖像說話。'},
+    {id:'balanced',label:'圖文並重',p:'每頁文字約 30-50 字，搭配一個核心視覺元素，兼顧閱讀與美感。'},
+    {id:'dense',label:'文字為主',p:'每頁允許較多文字（50-100 字），以清晰層次結構（標題 / 要點 / 說明）呈現。'}
+  ],
+  layouts:[
+    {id:'bento',label:'Bento Grid 便當盒',p:'版面採用便當盒格狀排版（Bento Grid），將資訊切割為大小不一的方塊，形成視覺層次與對比，兼具現代感與資訊組織效率。'},
+    {id:'fullimg',label:'全圖式',p:'每頁以全出血圖片為底，文字浮於其上，營造強烈視覺衝擊與情感共鳴。'},
+    {id:'split',label:'雜誌感分割',p:'版面採左右或上下分割設計，一側圖像一側文字，具備雜誌編排的知性美感。'},
+    {id:'timeline',label:'時間軸',p:'以水平或垂直時間軸為核心結構，呈現流程、歷程或步驟演進。'},
+    {id:'comparison',label:'對比矩陣',p:'使用對比表格或矩陣結構，清晰呈現兩個以上選項的差異與評比。'}
+  ],
+  illustrations:[
+    {id:'flat',label:'扁平插畫',p:'插圖採用現代扁平風格（Flat Design），色塊簡潔、線條明確，適合大眾宣導與教育訓練。'},
+    {id:'line',label:'線條插圖',p:'採用細膩線條插圖風格（Line Art），具備知性與簡約感，適合專業場合。'},
+    {id:'data-viz',label:'數據視覺化',p:'以精美數據圖表為核心視覺語言（圓餅圖、長條圖、熱力圖、時序圖），讓數字說故事。'},
+    {id:'watercolor',label:'水彩知性風',p:'採用水彩或水墨風格插圖，具備溫暖知性的藝術感，適合文化教育場合。'},
+    {id:'isometric',label:'等距立體插圖',p:'採用等距視角（Isometric）立體插圖，視覺現代具科技感，適合系統架構與流程說明。'}
+  ],
+  fonts:[
+    {id:'sans',label:'黑體 Sans-serif',p:'標題與內文採用現代黑體（建議：思源黑體 Noto Sans TC），乾淨俐落，適合大多數場合。'},
+    {id:'serif',label:'明體 / 宋體 Serif',p:'標題採用明體或宋體（建議：思源宋體 Noto Serif TC），兼具知性與傳統權威感，適合法規與學術場合。'},
+    {id:'rounded',label:'圓體 Rounded',p:'採用圓體字型（建議：小杉圓體），親切柔和，適合幼兒與一般大眾宣導。'},
+    {id:'handwriting',label:'手寫體',p:'標題採用手寫風格字型，增添個人溫度與創意感，適合創意宣傳場合。'},
+    {id:'mixed',label:'中英混搭',p:'標題採用英文 Display 字型搭配中文黑體，呈現國際感與設計層次，適合雙語簡報。'}
+  ],
+  visuals:[
+    {id:'minimal',label:'極簡現代',v:'純白背景、極大留白、現代黑體、極簡線條圖示、冷灰色調。主色白，輔色淺灰，強調色午夜藍。'},
+    {id:'premium',label:'商務質感',v:'深藍（#1a2744）背景、燙金（#c9a84c）配色、精緻襯線標題、高品質寫實圖片、沉穩嚴謹感。'},
+    {id:'tech',label:'科技現代',v:'深黑（#0d1117）背景、螢光青（#00d4ff）與亮藍（#0078d4）點綴、等距插圖、網格紋理、科幻未來感。'},
+    {id:'fresh',label:'自然清新',v:'米白（#faf8f3）背景、莫蘭迪色系、手繪風格元素、圓潤字體、充滿呼吸感的排版。'},
+    {id:'business',label:'正式專業',v:'標準白底、企業藍（#0054a6）色系、精準數據圖表、字級分明（標題 28px / 內文 16px）。'},
+    {id:'playful',label:'創意活潑',v:'亮黃（#ffe500）或珊瑚橘主色、幾何形狀、大字體設計（標題可達 60px）、充滿能量與視覺衝擊。'},
+    {id:'security',label:'🔒 資安專業',v:'深炭灰（#1c1c2e）背景搭配霓虹青（#39d0b8）強調色、盾牌與鎖頭圖示語言、矩陣背景紋理、標題採思源黑體粗體；強調色用於數據標示與警示，非強調元素保持低飽和度灰白。'}
+  ],
+  smartDefaults:{
+    outline:{role:'strategist',structure:'pyramid',tone:'professional',audience:'execs',format:'slide-pages',wordCount:'framework',visual:'business',ratio:'169',density:'dense'},
+    course:{role:'tech',structure:'golden-circle',tone:'inspiring',audience:'staff',format:'slide-pages',wordCount:'long',visual:'business',ratio:'169',density:'balanced'},
+    youtube:{role:'psycho',structure:'aida',tone:'humor',audience:'public',format:'transcript',wordCount:'long',visual:'tech',ratio:'169',density:'balanced'},
+    script:{role:'psycho',structure:'scqa',tone:'urgent',audience:'public',format:'dual-col',wordCount:'flexible',visual:'minimal',ratio:'169',density:'light'},
+    social:{role:'psycho',structure:'aida',tone:'provoke',audience:'public',format:'threads',wordCount:'short',visual:'playful',ratio:'portrait',density:'light'},
+    infographic:{role:'tech',structure:'problem-solution',tone:'inspiring',audience:'public',format:'slide-pages',wordCount:'short',visual:'minimal',ratio:'169',density:'light'},
+    report_deck:{role:'biz-analyst',structure:'pyramid',tone:'professional',audience:'execs',format:'slide-pages',wordCount:'medium',visual:'business',ratio:'169',density:'dense'}
+  }
+};
+
+let S={lang:'zh',src:'notebooklm',activePreset:null,mandate:false,smart:false,type:null,role:null,structure:null,tone:null,audience:null,format:null,wordCount:null,visual:null,ratio:null,pageCount:null,density:null,layout:null,illustration:null,font:null,regulations:[],requirements:[]};
+let T={title:'',outline:'',news:'',notes:''};
+
+function buildPrompt(){
+  const langLabel={zh:'繁體中文',en:'English',bilingual:'中英並列（標題中文，內文英文）'};
+  let p='';
+  p+=`# 輸出語言\n請以「${langLabel[S.lang]}」輸出所有內容。\n\n`;
+  if(S.mandate){
+    p+=`# ⚠️ 系統強制指令（確保輸出一致性）\n請絕對遵守以下規則：\n`;
+    p+=`1. 每頁標題長度不超過 12 字，副標題不超過 20 字。\n`;
+    p+=`2. 整份簡報色彩、字體、版面風格必須統一，不得中途更換設計語言。\n`;
+    p+=`3. 涉及法規或標準時，引用正確版本（如 ISO 27001:2022），不得使用已廢止的舊版。\n`;
+    p+=`4. 根據目標受眾調整術語密度，一般員工版本禁止堆砌英文縮寫。\n\n`;
+  }
+  const srcMap={notebooklm:'僅參考已上傳至 Notebook LM 的來源文件，不引用外部資訊。',web:'以網際網路即時資訊為主要資料來源，優先引用近期可信來源。',both:'以 Notebook LM 來源文件為主要依據，並以網際網路資訊補充時事佐證，來源文件優先級高於網路資訊。'};
+  p+=`# 資料來源策略\n${srcMap[S.src]}\n\n`;
+  const typeObj=CFG.types.find(t=>t.id===S.type);
+  p+=`${typeObj?typeObj.p:'你是一位資訊安全與內容策略專家。請根據以下設定，為我規劃高品質的內容架構。'}\n\n`;
+  if(T.title.trim()) p+=`# 主題與目標\n「${T.title.trim()}」\n\n`;
+  if(T.outline.trim()) p+=`# 大綱框架\n${T.outline.trim()}\n\n`;
+  if(T.news.trim()) p+=`# 時事新聞案例\n請將以下真實案例融入開場 Hook 或特定章節作為佐證：\n「${T.news.trim()}」\n\n`;
+  if(S.regulations.length>0){p+=`# 適用法規與標準\n`;S.regulations.forEach(r=>p+=`- ${r.p}\n`);p+=`\n`;}
+  const roleObj=CFG.roles.find(r=>r.id===S.role);
+  const strObj=CFG.structures.find(s=>s.id===S.structure);
+  if(roleObj) p+=`# 角色設定\n${roleObj.p}\n\n`;
+  if(strObj) p+=`# 邏輯架構\n${strObj.p}\n\n`;
+  let details='';
+  const toneObj=CFG.tones.find(t=>t.id===S.tone);
+  const audObj=CFG.audiences.find(a=>a.id===S.audience);
+  const wcObj=CFG.wordCounts.find(w=>w.id===S.wordCount);
+  if(toneObj) details+=`- 語氣風格：${toneObj.p}\n`;
+  if(audObj) details+=`- 目標受眾：${audObj.p}\n`;
+  if(wcObj) details+=`- 篇幅要求：${wcObj.p}\n`;
+  if(details) p+=`# 策略細節\n${details}\n`;
+  if(S.requirements.length>0){p+=`# 必要組成要求\n`;S.requirements.forEach(r=>p+=`- ${r.p}\n`);p+=`\n`;}
+  if(T.notes.trim()) p+=`# 補充細節\n${T.notes.trim()}\n\n`;
+  const fmtObj=CFG.formats.find(f=>f.id===S.format);
+  if(fmtObj) p+=`# 輸出格式規範\n${fmtObj.p}\n\n`;
+  p+=`請輸出完整且具備深度洞察的內容框架。\n`;
+  const ratioObj=CFG.ratios.find(r=>r.id===S.ratio);
+  const pcObj=CFG.pageCounts.find(p2=>p2.id===S.pageCount);
+  const densObj=CFG.densities.find(d=>d.id===S.density);
+  const layObj=CFG.layouts.find(l=>l.id===S.layout);
+  const illObj=CFG.illustrations.find(i=>i.id===S.illustration);
+  const fontObj=CFG.fonts.find(f=>f.id===S.font);
+  const visObj=CFG.visuals.find(v=>v.id===S.visual);
+  if(ratioObj||pcObj||densObj||layObj||illObj||fontObj||visObj){
+    p+=`\n// ── 簡報設計規格 ─────────────────────────────────\n`;
+    if(ratioObj) p+=`// 比例：${ratioObj.p}\n`;
+    if(pcObj) p+=`// 頁數：${pcObj.p}\n`;
+    if(densObj) p+=`// 資訊密度：${densObj.p}\n`;
+    if(layObj) p+=`// 版面排版：${layObj.p}\n`;
+    if(illObj) p+=`// 插圖圖表：${illObj.p}\n`;
+    if(fontObj) p+=`// 字型：${fontObj.p}\n`;
+    if(visObj) p+=`// 視覺配色：${visObj.label} — ${visObj.v}\n`;
+    p+=`// ──────────────────────────────────────────────────\n`;
+  }
+  document.getElementById('prompt-output').textContent=p.trim();
+}
+
+function renderChips(elId,items,stateKey,isMulti){
+  const el=document.getElementById(elId);
+  if(!el) return;
+  el.innerHTML='';
+  items.forEach(item=>{
+    const isActive=isMulti?S[stateKey].some(r=>r.id===item.id):S[stateKey]===item.id;
+    const btn=document.createElement('button');
+    btn.className=`sel-btn ${isActive?'active':''}`;
+    btn.textContent=item.label;
+    btn.onclick=()=>{
+      if(isMulti){const arr=S[stateKey];const idx=arr.findIndex(r=>r.id===item.id);if(idx>-1)arr.splice(idx,1);else arr.push(item);}
+      else{
+        S[stateKey]=S[stateKey]===item.id?null:item.id;
+        if(stateKey==='type'){S.activePreset=null;if(S.smart&&CFG.smartDefaults[item.id]){const d=CFG.smartDefaults[item.id];Object.keys(d).forEach(k=>{S[k]=d[k];});}}
+      }
+      renderAll();buildPrompt();
+    };
+    el.appendChild(btn);
+  });
+  if(isMulti){
+    const clr=document.createElement('button');
+    clr.className='sel-btn warn';clr.textContent='清除';
+    clr.onclick=()=>{S[stateKey]=[];renderAll();buildPrompt();};
+    el.appendChild(clr);
+  }
+}
+
+function renderPresets(){
+  const grid=document.getElementById('preset-grid');
+  if(!grid) return;
+  grid.innerHTML='';
+  CFG.secPresets.forEach(preset=>{
+    const card=document.createElement('button');
+    card.className=`preset-card ${S.activePreset===preset.id?'active':''}`;
+    card.innerHTML=`<div class="pt">${preset.title}</div><div class="pd">${preset.desc}</div>`;
+    card.onclick=()=>{
+      if(S.activePreset===preset.id){S.activePreset=null;}
+      else{
+        S.activePreset=preset.id;const d=preset.d;
+        S.type=d.type;S.role=d.role;S.structure=d.structure;S.tone=d.tone;S.audience=d.audience;
+        S.format=d.format;S.wordCount=d.wordCount;S.visual=d.visual;S.ratio=d.ratio;
+        S.density=d.density;S.layout=d.layout;S.illustration=d.illustration;S.font=d.font;S.mandate=d.mandate;
+        S.regulations=CFG.regulations.filter(r=>d.regulations.includes(r.id));
+        S.requirements=CFG.requirements.filter(r=>d.requirements.includes(r.id));
+      }
+      renderAll();buildPrompt();
+    };
+    grid.appendChild(card);
+  });
+}
+
+function renderAll(){
+  renderPresets();
+  renderChips('grp-types',CFG.types,'type',false);
+  renderChips('grp-roles',CFG.roles,'role',false);
+  renderChips('grp-structures',CFG.structures,'structure',false);
+  renderChips('grp-tones',CFG.tones,'tone',false);
+  renderChips('grp-audiences',CFG.audiences,'audience',false);
+  renderChips('grp-regulations',CFG.regulations,'regulations',true);
+  renderChips('grp-requirements',CFG.requirements,'requirements',true);
+  renderChips('grp-formats',CFG.formats,'format',false);
+  renderChips('grp-wordcounts',CFG.wordCounts,'wordCount',false);
+  renderChips('grp-ratios',CFG.ratios,'ratio',false);
+  renderChips('grp-pagecounts',CFG.pageCounts,'pageCount',false);
+  renderChips('grp-densities',CFG.densities,'density',false);
+  renderChips('grp-layouts',CFG.layouts,'layout',false);
+  renderChips('grp-illustrations',CFG.illustrations,'illustration',false);
+  renderChips('grp-fonts',CFG.fonts,'font',false);
+  renderChips('grp-visuals',CFG.visuals,'visual',false);
+  const mc=document.getElementById('mandate-cb');if(mc)mc.checked=S.mandate;
+  const sc=document.getElementById('smart-cb');if(sc)sc.checked=S.smart;
+  if(typeof lucide!=='undefined')lucide.createIcons();
+}
+
+// Events
+document.getElementById('lang-tabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.lang-tab');if(!btn)return;
+  document.querySelectorAll('.lang-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');S.lang=btn.dataset.lang;buildPrompt();
+});
+document.getElementById('src-btns').addEventListener('click',e=>{
+  const btn=e.target.closest('.src-btn');if(!btn)return;
+  document.querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');S.src=btn.dataset.src;buildPrompt();
+});
+document.getElementById('mandate-cb').addEventListener('change',e=>{S.mandate=e.target.checked;buildPrompt();});
+document.getElementById('smart-cb').addEventListener('change',e=>{S.smart=e.target.checked;});
+const inputMap={'inp-title':'title','inp-outline':'outline','inp-news':'news','inp-notes':'notes'};
+Object.keys(inputMap).forEach(id=>{
+  document.getElementById(id).addEventListener('input',e=>{T[inputMap[id]]=e.target.value;buildPrompt();});
+});
+document.getElementById('copy-btn').addEventListener('click',()=>{
+  const text=document.getElementById('prompt-output').textContent;
+  navigator.clipboard.writeText(text).catch(()=>{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);});
+  const btn=document.getElementById('copy-btn');const orig=btn.innerHTML;
+  btn.innerHTML='<i data-lucide="check" class="w-3.5 h-3.5"></i> COPIED!';
+  if(typeof lucide!=='undefined')lucide.createIcons();
+  setTimeout(()=>{btn.innerHTML=orig;if(typeof lucide!=='undefined')lucide.createIcons();},2000);
+});
+document.getElementById('reset-btn').addEventListener('click',()=>{if(confirm('確定要重置所有設定嗎？'))location.reload();});
+const resizer=document.getElementById('resizer');const leftPanel=document.getElementById('left-panel');const mainEl=document.getElementById('container');
+let isResizing=false;
+resizer.addEventListener('mousedown',()=>{isResizing=true;document.body.style.cursor='col-resize';});
+document.addEventListener('mousemove',e=>{if(!isResizing)return;const rect=mainEl.getBoundingClientRect();const pct=((e.clientX-rect.left)/rect.width)*100;if(pct>=20&&pct<=80)leftPanel.style.flexBasis=pct+'%';});
+document.addEventListener('mouseup',()=>{isResizing=false;document.body.style.cursor='default';});
+
+renderAll();
+buildPrompt();
+</script>
+</body>
+</html>
