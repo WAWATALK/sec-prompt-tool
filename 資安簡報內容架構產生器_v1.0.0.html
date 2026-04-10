@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>資安簡報內容架構產生器 v1.0.0 — by 資安小麻雀</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+
+
 <style>
 *{box-sizing:border-box;}
 .scrollbar-thin::-webkit-scrollbar{width:5px;height:5px;}
@@ -43,6 +44,9 @@ textarea:focus{border-color:#6366f1;box-shadow:0 0 0 2px #eef2ff;}
 .smart-toggle{display:flex;align-items:center;gap:5px;cursor:pointer;color:#6366f1;font-weight:700;font-size:10pt;}
 .smart-toggle input{width:14px;height:14px;cursor:pointer;accent-color:#6366f1;}
 hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
+
+/* Tailwind utilities */
+.h-screen{height:100vh}.h-full{height:100%}.flex{display:flex}.flex-col{flex-direction:column}.flex-grow{flex-grow:1}.flex-1{flex:1 1 0%}.flex-wrap{flex-wrap:wrap}.flex-nowrap{flex-wrap:nowrap}.shrink-0{flex-shrink:0}.min-w-0{min-width:0}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.inline-flex{display:inline-flex}.grid{display:grid}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1_5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.pb-4{padding-bottom:1rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-2{margin-left:.5rem}.ml-auto{margin-left:auto}.mx-auto{margin-left:auto;margin-right:auto}.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-6{gap:1.5rem}.w-full{width:100%}.w-1{width:.25rem}.w-px{width:1px}.h-full{height:100%}.h-10{height:2.5rem}.max-w-2xl{max-width:42rem}.bg-white{background:#fff}.bg-slate-50{background:#f8fafc}.bg-slate-200{background:#e2e8f0}.bg-slate-800{background:#1e293b}.bg-slate-900{background:#0f172a}.bg-indigo-600{background:#4f46e5}.text-white{color:#fff}.text-slate-400{color:#94a3b8}.text-slate-800{color:#1e293b}.text-indigo-400{color:#818cf8}.text-emerald-400{color:#34d399}.text-cyan-700{color:#0e7490}.text-amber-800{color:#92400e}.border{border-width:1px;border-style:solid}.border-b{border-bottom-width:1px;border-bottom-style:solid}.border-slate-200{border-color:#e2e8f0}.border-slate-700{border-color:#334155}.border-slate-800{border-color:#1e293b}.border-amber-200{border-color:#fde68a}.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.rounded-r-lg{border-top-right-radius:.5rem;border-bottom-right-radius:.5rem}.rounded-l-lg{border-top-left-radius:.5rem;border-bottom-left-radius:.5rem}.rounded-full{border-radius:9999px}.font-mono{font-family:ui-monospace,monospace}.font-black{font-weight:900}.font-bold{font-weight:700}.font-semibold{font-weight:600}.font-normal{font-weight:400}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.tracking-widest{letter-spacing:.1em}.tracking-tighter{letter-spacing:-.05em}.tracking-tight{letter-spacing:-.025em}.leading-relaxed{line-height:1.625}.whitespace-pre-wrap{white-space:pre-wrap}.shadow-sm{box-shadow:0 1px 2px rgba(0,0,0,.05)}.shadow-xl{box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}.shadow-md{box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}.z-10{z-index:10}.transition-all{transition:all .15s}.transition-colors{transition:color .15s,background-color .15s,border-color .15s}.cursor-col-resize{cursor:col-resize}
 </style>
 </head>
 <body class="h-screen bg-slate-50 flex flex-col font-sans text-slate-900 overflow-hidden">
@@ -57,7 +61,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
       <span class="inline-flex items-center gap-1 bg-cyan-50 text-cyan-700 border border-cyan-200 rounded-full px-2 py-0.5 text-[9.5pt] font-semibold">🔒 ISMS／PIMS 專業版</span>
     </h1>
     <button id="reset-btn" class="sel-btn warn flex items-center gap-1 text-[10pt] ml-2">
-      <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> 重置
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> 重置
     </button>
   </div>
 </header>
@@ -78,7 +82,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         </div>
 
         <!-- ZONE 1 -->
-        <div class="zone-bar zone-blue"><i data-lucide="file-text" class="w-4 h-4"></i> 第一區：內容策略</div>
+        <div class="zone-bar zone-blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> 第一區：內容策略</div>
 
         <div class="group-label">0. 資料來源</div>
         <div class="flex gap-2 mb-4" id="src-btns">
@@ -140,7 +144,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         <hr class="zone-div">
 
         <!-- ZONE 2 -->
-        <div class="zone-bar zone-green"><i data-lucide="palette" class="w-4 h-4"></i> 第二區：視覺設計</div>
+        <div class="zone-bar zone-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> 第二區：視覺設計</div>
 
         <div class="group-label">10. 投影片比例</div>
         <div class="chip-row" id="grp-ratios"></div>
@@ -190,7 +194,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         <span class="flex items-center gap-1 text-[10pt] text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span> LIVE</span>
       </div>
       <button id="copy-btn" class="text-[10.5pt] font-bold bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1 rounded transition-all active:scale-95 shadow-md flex items-center gap-2 uppercase tracking-tight">
-        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Prompt
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy Prompt
       </button>
     </div>
     <div class="p-5 overflow-y-auto flex-grow font-mono text-[10.5pt] text-indigo-100/90 leading-relaxed scrollbar-thin">
@@ -474,7 +478,7 @@ function renderAll(){
   renderChips('grp-visuals',CFG.visuals,'visual',false);
   const mc=document.getElementById('mandate-cb');if(mc)mc.checked=S.mandate;
   const sc=document.getElementById('smart-cb');if(sc)sc.checked=S.smart;
-  if(typeof lucide!=='undefined')lucide.createIcons();
+  
 }
 
 // Events
@@ -498,9 +502,9 @@ document.getElementById('copy-btn').addEventListener('click',()=>{
   const text=document.getElementById('prompt-output').textContent;
   navigator.clipboard.writeText(text).catch(()=>{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);});
   const btn=document.getElementById('copy-btn');const orig=btn.innerHTML;
-  btn.innerHTML='<i data-lucide="check" class="w-3.5 h-3.5"></i> COPIED!';
-  if(typeof lucide!=='undefined')lucide.createIcons();
-  setTimeout(()=>{btn.innerHTML=orig;if(typeof lucide!=='undefined')lucide.createIcons();},2000);
+  btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> COPIED!';
+  
+  setTimeout(()=>{btn.innerHTML=orig;},2000);
 });
 document.getElementById('reset-btn').addEventListener('click',()=>{if(confirm('確定要重置所有設定嗎？'))location.reload();});
 const resizer=document.getElementById('resizer');const leftPanel=document.getElementById('left-panel');const mainEl=document.getElementById('container');
@@ -514,3 +518,4 @@ buildPrompt();
 </script>
 </body>
 </html>
+
