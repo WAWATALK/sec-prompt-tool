@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>衛教內容產生器 v1.0.1 — by 資安小麻雀</title>
+<title>衛教內容產生器 v1.0.4 — by 資安小麻雀</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-size:11pt;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;height:100vh;display:flex;flex-direction:column;background:#f8fafc;color:#1e293b;overflow:hidden;}
@@ -67,7 +67,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
     <h1 style="font-size:13pt;font-weight:900;color:#1e293b;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
       <span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:4px;font-size:10.5pt;letter-spacing:-.05em;">🌿</span>
       衛教內容產生器
-      <span style="font-size:10pt;color:#94a3b8;font-weight:400;">v1.0.1</span>
+      <span style="font-size:10pt;color:#94a3b8;font-weight:400;">v1.0.4</span>
       <span style="font-size:10pt;color:#10b981;font-weight:600;">by 資安小麻雀</span>
       <span class="inline-flex items-center" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;border-radius:9999px;padding:1px 8px;font-size:9.5pt;font-weight:600;">生活型態醫學</span>
     </h1>
@@ -84,6 +84,35 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
   <div id="left-panel" class="h-full flex flex-col shrink-0 overflow-hidden border border-slate-200 rounded-l-lg bg-white shadow-sm" style="flex-basis:56%;">
     <div class="flex-grow overflow-y-auto scrollbar-thin" style="padding:.75rem;">
       <div class="mx-auto" style="max-width:42rem;">
+
+        <!-- 操作說明 -->
+        <div style="background:#0f172a;border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+          <div style="font-size:10pt;font-weight:700;color:#34d399;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;">
+            📖 NotebookLM 操作步驟
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">1</span>
+              <span style="font-size:10pt;color:#94a3b8;">到 NotebookLM 新增記事本，選取或上傳來源文件</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">2</span>
+              <span style="font-size:10pt;color:#94a3b8;">複製下方 <span style="color:#34d399;font-weight:700;">📋 Prompt</span>，貼到聊天對話，產出內容架構</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">3</span>
+              <span style="font-size:10pt;color:#94a3b8;">點選「簡報」功能，複製 <span style="color:#818cf8;font-weight:700;">📊 簡報摘要指令</span> 貼入，產出簡報</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#64748b;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">4</span>
+              <span style="font-size:10pt;color:#64748b;font-style:italic;">等待簡報產出完成…</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">5</span>
+              <span style="font-size:10pt;color:#94a3b8;">點選「影片」功能，複製 <span style="color:#fb923c;font-weight:700;">🎬 影片摘要指令</span> 貼入，依簡報產出影片</span>
+            </div>
+          </div>
+        </div>
 
         <div class="zone-bar zone-green">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -124,7 +153,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         <div class="grid grid-cols-1 gap-2" style="margin-bottom:1.5rem;" id="style-grid"></div>
 
         <div style="text-align:center;padding:1rem 0;border-top:1px solid #f1f5f9;">
-          <p style="font-size:9.5pt;color:#94a3b8;">衛教內容產生器 v1.0.1 &nbsp;·&nbsp; by <span style="color:#10b981;font-weight:600;">資安小麻雀 🐦</span></p>
+          <p style="font-size:9.5pt;color:#94a3b8;">衛教內容產生器 v1.0.4 &nbsp;·&nbsp; by <span style="color:#10b981;font-weight:600;">資安小麻雀 🐦</span></p>
         </div>
 
       </div>
@@ -258,22 +287,41 @@ function buildVideoPrompt(){
   const topic = T.topic.trim() || '本週衛教主題';
   const season = T.season.trim();
   let v = '';
-  v += `請聚焦在以下重點，製作一段適合中老年慢性病患者收聽的衛教音頻：
+  v += `請依據已上傳的簡報內容與頁面順序製作音頻，不要自行增加或省略任何章節。
 
 `;
-  v += `1. 【主題】${topic}
+  v += `【主題】${topic}
 `;
-  if(season) v += `2. 【時令連結】請自然帶入「${season}」的節氣或節慶氛圍
+  if(season) v += `【時令】請自然帶入「${season}」的氛圍，不要刻意強調
 `;
-  v += `3. 【語氣】輕鬆對話、溫暖親切，像朋友聊天而非醫師衛教
+  v += `
+【核心精神】這是一次「分享」，不是「衛教」。
 `;
-  v += `4. 【術語處理】遇到專業詞彙立刻用生活化語言解釋，避免讓聽眾感到陌生
+  v += `想像你是一位朋友，剛好看到一個有趣的新資訊，興奮地想跟對方說：
 `;
-  v += `5. 【節奏】放慢語速，每個重點之間留適當停頓，讓中老年聽眾能跟上
+  v += `「欸！我最近發現一件事，跟你說一下...」
+
 `;
-  v += `6. 【重點強調】聚焦在「可以馬上做到的行動」，讓聽眾聽完有收穫感
+  v += `❌ 絕對禁止：
 `;
-  v += `7. 【結尾】溫暖收尾，鼓勵聽眾分享給家人或朋友
+  v += `- 「你應該」「你必須」「一定要」「請注意」
+`;
+  v += `- 命令句、說教語氣、像老師上課的感覺
+`;
+  v += `- 重複強調「這很重要」
+
+`;
+  v += `✅ 請這樣說話：
+`;
+  v += `- 「你知道嗎，原來...」「我最近看到一個很有趣的研究...」
+`;
+  v += `- 「很多人跟我一樣，以前都不知道...」「其實沒有想像中難...」
+`;
+  v += `- 遇到專業詞彙，立刻用生活比喻帶過，不解釋太多
+`;
+  v += `- 節奏自然放慢，像朋友聊天的速度
+`;
+  v += `- 結尾像道別，不像下課：「好啦，就分享到這裡，希望對你有幫助～」
 `;
   document.getElementById('video-output').textContent = v.trim();
 }
