@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>衛教內容產生器 v1.0.4 — by 資安小麻雀</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-size:11pt;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;height:100vh;display:flex;flex-direction:column;background:#f8fafc;color:#1e293b;overflow:hidden;}
+/* ── Layout ── */
+.h-screen{height:100vh}.h-full{height:100%}.flex{display:flex}.flex-col{flex-direction:column}.flex-grow{flex-grow:1}.flex-1{flex:1 1 0%}.flex-wrap{flex-wrap:wrap}.shrink-0{flex-shrink:0}.min-w-0{min-width:0}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.inline-flex{display:inline-flex}.grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* ── Spacing ── */
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0_5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1_5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.ml-1{margin-left:.25rem}.ml-2{margin-left:.5rem}.ml-auto{margin-left:auto}.mx-auto{margin-left:auto;margin-right:auto}.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-6{gap:1.5rem}
+/* ── Sizing ── */
+.w-full{width:100%}.w-1{width:.25rem}.w-px{width:1px}.w-icon{width:.875rem}.h-icon{height:.875rem}.w-icon-lg{width:1rem}.h-icon-lg{height:1rem}.h-10{height:2.5rem}.max-w-2xl{max-width:42rem}
+/* ── Colors ── */
+.bg-white{background-color:#fff}.bg-slate-50{background-color:#f8fafc}.bg-slate-200{background-color:#e2e8f0}.bg-slate-800{background-color:#1e293b}.bg-slate-900{background-color:#0f172a}.bg-emerald-500{background-color:#10b981}.bg-emerald-600{background-color:#059669}.bg-emerald-50{background-color:#ecfdf5}.bg-cyan-50{background-color:#ecfeff}.bg-amber-50{background-color:#fffbeb}
+.text-white{color:#fff}.text-slate-400{color:#94a3b8}.text-slate-800{color:#1e293b}.text-emerald-400{color:#34d399}.text-emerald-500{color:#10b981}.text-emerald-700{color:#047857}.text-cyan-700{color:#0e7490}.text-amber-800{color:#92400e}
+/* ── Border ── */
+.border{border-width:1px;border-style:solid}.border-b{border-bottom-width:1px;border-bottom-style:solid}.border-t{border-top-width:1px;border-top-style:solid}.border-slate-100{border-color:#f1f5f9}.border-slate-200{border-color:#e2e8f0}.border-slate-700{border-color:#334155}.border-slate-800{border-color:#1e293b}.border-emerald-200{border-color:#a7f3d0}.border-cyan-200{border-color:#a5f3fc}.border-amber-200{border-color:#fde68a}.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.rounded-r-lg{border-top-right-radius:.5rem;border-bottom-right-radius:.5rem}.rounded-l-lg{border-top-left-radius:.5rem;border-bottom-left-radius:.5rem}.rounded-full{border-radius:9999px}
+/* ── Typography ── */
+.font-mono{font-family:ui-monospace,monospace}.font-black{font-weight:900}.font-bold{font-weight:700}.font-semibold{font-weight:600}.font-normal{font-weight:400}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.tracking-widest{letter-spacing:.1em}.tracking-tighter{letter-spacing:-.05em}.tracking-tight{letter-spacing:-.025em}.leading-relaxed{line-height:1.625}.whitespace-pre-wrap{white-space:pre-wrap}
+/* ── Effects ── */
+.shadow-sm{box-shadow:0 1px 2px rgba(0,0,0,.05)}.shadow-xl{box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1)}.shadow-md{box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}.z-10{z-index:10}.transition-all{transition:all .15s}.transition-colors{transition:color .15s,background-color .15s,border-color .15s}.cursor-col-resize{cursor:col-resize}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}
+
+/* ── Scrollbar ── */
+.scrollbar-thin::-webkit-scrollbar{width:5px;height:5px}
+.scrollbar-thin::-webkit-scrollbar-track{background:transparent}
+.scrollbar-thin::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:10px}
+
+/* ── Components ── */
+.sel-btn{transition:all 0.18s;font-size:10.5pt;padding:5px 12px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;cursor:pointer;white-space:nowrap;}
+.sel-btn:hover{border-color:#10b981;background:#f0fdf4;color:#065f46;}
+.sel-btn.active{border-color:#10b981;background:#d1fae5;color:#065f46;font-weight:700;box-shadow:0 1px 3px rgba(16,185,129,.15);}
+.sel-btn.warn{background:#f97316!important;color:#fff!important;border-color:#f97316!important;font-weight:700;}
+.sel-btn.warn:hover{background:#ea580c!important;}
+.sel-btn:active{transform:scale(.97)}
+
+.theme-btn{transition:all 0.18s;padding:8px 12px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;text-align:left;width:100%;}
+.theme-btn:hover{border-color:#10b981;background:#f0fdf4;}
+.theme-btn.active{border-color:#10b981;background:#d1fae5;box-shadow:0 0 0 2px #a7f3d0;}
+.theme-btn .tt{font-size:10.5pt;font-weight:700;color:#065f46;}
+.theme-btn .td{font-size:9.5pt;color:#64748b;margin-top:2px;}
+
+.group-label{font-size:10pt;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;align-items:center;}
+
+.zone-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:8px;margin-bottom:14px;font-size:10.5pt;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
+.zone-green{background:#d1fae5;color:#065f46;border-left:3px solid #10b981;}
+.zone-teal{background:#ccfbf1;color:#134e4a;border-left:3px solid #14b8a6;}
+
+textarea{width:100%;font-size:10.5pt;font-family:inherit;background:#fff;color:#1e293b;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;outline:none;resize:none;transition:border-color .15s;}
+textarea:focus{border-color:#10b981;box-shadow:0 0 0 2px #d1fae5;}
+
+hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
+
+.icon{display:inline-flex;align-items:center;justify-content:center;}
+</style>
+</head>
+<body>
+
+<header class="shrink-0 border-b border-slate-200 bg-white shadow-sm z-10" style="padding:.5rem 1rem;">
+  <div class="flex items-center justify-between">
+    <h1 style="font-size:13pt;font-weight:900;color:#1e293b;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:4px;font-size:10.5pt;letter-spacing:-.05em;">🌿</span>
+      衛教內容產生器
+      <span style="font-size:10pt;color:#94a3b8;font-weight:400;">v1.0.4</span>
+      <span style="font-size:10pt;color:#10b981;font-weight:600;">by 資安小麻雀</span>
+      <span class="inline-flex items-center" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;border-radius:9999px;padding:1px 8px;font-size:9.5pt;font-weight:600;">生活型態醫學</span>
+    </h1>
+    <button id="reset-btn" class="sel-btn warn flex items-center gap-1" style="font-size:10pt;margin-left:8px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+      重置
+    </button>
+  </div>
+</header>
+
+<main class="flex-grow flex overflow-hidden" style="padding:8px;gap:0;" id="container">
+
+  <!-- Left Panel -->
+  <div id="left-panel" class="h-full flex flex-col shrink-0 overflow-hidden border border-slate-200 rounded-l-lg bg-white shadow-sm" style="flex-basis:56%;">
+    <div class="flex-grow overflow-y-auto scrollbar-thin" style="padding:.75rem;">
+      <div class="mx-auto" style="max-width:42rem;">
+
+        <!-- 操作說明 -->
+        <div style="background:#0f172a;border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+          <div style="font-size:10pt;font-weight:700;color:#34d399;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;">
+            📖 NotebookLM 操作步驟
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">1</span>
+              <span style="font-size:10pt;color:#94a3b8;">到 NotebookLM 新增記事本，選取或上傳來源文件</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">2</span>
+              <span style="font-size:10pt;color:#94a3b8;">複製下方 <span style="color:#34d399;font-weight:700;">📋 Prompt</span>，貼到聊天對話，產出內容架構</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">3</span>
+              <span style="font-size:10pt;color:#94a3b8;">點選「簡報」功能，複製 <span style="color:#818cf8;font-weight:700;">📊 簡報摘要指令</span> 貼入，產出簡報</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#64748b;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">4</span>
+              <span style="font-size:10pt;color:#64748b;font-style:italic;">等待簡報產出完成…</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">5</span>
+              <span style="font-size:10pt;color:#94a3b8;">點選「影片」功能，複製 <span style="color:#fb923c;font-weight:700;">🎬 影片摘要指令</span> 貼入，依簡報產出影片</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-bar zone-green">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          第一區：本週內容規劃
+        </div>
+
+        <div class="group-label">🌱 生活型態醫學主題快選</div>
+        <div class="grid grid-cols-2 gap-2 mb-4" id="theme-grid"></div>
+
+        <div class="group-label">✏️ 本週主題 <span style="color:#94a3b8;font-weight:400;text-transform:none;font-size:9.5pt;">（可自由輸入或從上方快選）</span></div>
+        <textarea id="inp-topic" rows="2" style="margin-bottom:.75rem;" placeholder="例如：飯後血糖控制、規律運動對血壓的影響、睡眠與胰島素阻抗..."></textarea>
+
+        <div class="group-label">🗓️ 本週時令 / 節氣 / 節慶</div>
+        <textarea id="inp-season" rows="1" style="margin-bottom:.75rem;" placeholder="例如：清明、穀雨、母親節、夏至、中秋..."></textarea>
+
+        <div class="group-label" style="color:#0891b2;">📎 本週參考來源 <span style="color:#94a3b8;font-weight:400;text-transform:none;font-size:9.5pt;">（可貼入文字、網址或摘要）</span></div>
+        <textarea id="inp-source" rows="3" style="margin-bottom:.75rem;border-color:#a5f3fc;background:#f0fdff;" placeholder="例如：&#10;衛福部國健署衛教資料...&#10;美國飲食指南 2025-2030 核心建議：Eat real food...&#10;https://www.hpa.gov.tw/..."></textarea>
+
+        <div class="chip-row" style="margin-bottom:1rem;">
+          <span class="group-label" style="margin-bottom:0;">🔬 引用最新國際指南</span>
+          <button class="sel-btn" id="guideline-btn">引用最新飲食與代謝健康指南（2025）</button>
+        </div>
+
+        <div class="group-label">✨ 亮點開場風格</div>
+        <div class="chip-row" id="grp-hook"></div>
+
+        <div class="group-label">📝 額外要求 / 特殊指示</div>
+        <textarea id="inp-notes" rows="2" style="margin-bottom:1.5rem;" placeholder="例如：這週想強調某個特定概念、避免某些詞彙、搭配特定活動..."></textarea>
+
+        <hr class="zone-div">
+
+        <div class="zone-bar zone-teal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          第二區：本週畫風
+        </div>
+
+        <div class="group-label">🎨 畫風選擇 <span style="color:#94a3b8;font-weight:400;text-transform:none;font-size:9.5pt;">— 偶爾換換，避免視覺疲勞</span></div>
+        <div class="grid grid-cols-1 gap-2" style="margin-bottom:1.5rem;" id="style-grid"></div>
+
+        <div style="text-align:center;padding:1rem 0;border-top:1px solid #f1f5f9;">
+          <p style="font-size:9.5pt;color:#94a3b8;">衛教內容產生器 v1.0.4 &nbsp;·&nbsp; by <span style="color:#10b981;font-weight:600;">資安小麻雀 🐦</span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Resizer -->
+  <div id="resizer" class="shrink-0 transition-colors" style="width:4px;height:100%;cursor:col-resize;background:#e2e8f0;display:flex;align-items:center;justify-content:center;">
+    <div style="width:1px;height:2.5rem;background:#94a3b8;border-radius:9999px;"></div>
+  </div>
+
+  <!-- Right Panel: Three Output Columns -->
+  <div class="h-full flex-1 min-w-0 flex flex-col rounded-r-lg shadow-xl overflow-hidden" style="background:#0f172a;border:1px solid #1e293b;">
+    <div class="flex items-center justify-between border-b border-slate-700 shrink-0" style="padding:.375rem .75rem;background:#1e293b;">
+      <div class="flex items-center gap-3">
+        <span class="font-mono uppercase tracking-widest" style="font-size:10.5pt;color:#94a3b8;">輸出面板</span>
+        <span class="flex items-center gap-1" style="font-size:10pt;color:#34d399;">
+          <span style="width:6px;height:6px;border-radius:9999px;background:#34d399;display:inline-block;animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite;"></span> LIVE
+        </span>
+      </div>
+    </div>
+    <!-- 上中下三區塊 -->
+    <div class="flex-grow flex flex-col overflow-hidden" style="gap:1px;background:#334155;">
+
+      <!-- 上：Main Prompt -->
+      <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
+        <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
+          <div class="flex items-center gap-2">
+            <span style="font-size:10pt;font-weight:700;color:#34d399;">📋 Prompt</span>
+            <span style="font-size:9pt;color:#64748b;">— 貼到聊天對話</span>
+          </div>
+          <button id="copy-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#059669;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
+          </button>
+        </div>
+        <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
+          <pre id="prompt-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(167,243,208,.9);"></pre>
+        </div>
+      </div>
+
+      <!-- 中：Video Summary -->
+      <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
+        <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
+          <div class="flex items-center gap-2">
+            <span style="font-size:10pt;font-weight:700;color:#fb923c;">🎬 影片摘要指令</span>
+            <span style="font-size:9pt;color:#64748b;">— 貼到 Audio Overview</span>
+          </div>
+          <button id="copy-video-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#ea580c;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
+          </button>
+        </div>
+        <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
+          <pre id="video-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(253,186,116,.9);"></pre>
+        </div>
+      </div>
+
+      <!-- 下：Slides Summary -->
+      <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
+        <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
+          <div class="flex items-center gap-2">
+            <span style="font-size:10pt;font-weight:700;color:#818cf8;">📊 簡報摘要指令</span>
+            <span style="font-size:9pt;color:#64748b;">— 貼到 Slides</span>
+          </div>
+          <button id="copy-slides-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#4f46e5;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
+          </button>
+        </div>
+        <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
+          <pre id="slides-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(165,180,252,.9);"></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+const CFG={
+  themes:[
+    {id:'diet',title:'🥗 飲食營養',desc:'低GI、減糖、少鹽、均衡飲食',topic:'慢性病患者的飲食控制與營養均衡'},
+    {id:'exercise',title:'🏃 規律運動',desc:'有氧運動、肌力訓練、日常活動量',topic:'規律運動對血糖血壓的改善效果'},
+    {id:'sleep',title:'😴 睡眠品質',desc:'睡眠與代謝、血糖波動、修復機制',topic:'睡眠品質對慢性病控制的關鍵影響'},
+    {id:'stress',title:'🧘 壓力管理',desc:'情緒壓力、皮質醇、放鬆技巧',topic:'壓力與血糖的隱藏關係及調適方法'},
+    {id:'substance',title:'🚭 戒菸戒酒',desc:'戒菸戒酒對心血管與代謝的影響',topic:'戒菸戒酒如何改善慢性病控制'},
+    {id:'social',title:'🤝 社交關係',desc:'人際支持、心理健康、社區參與',topic:'良好社交關係對慢性病患者健康的正向影響'}
+  ],
+  hooks:[
+    {id:'scenario',label:'生活情境切入',p:'以一個中老年人日常生活中真實會遇到的情境開場（例如：飯後想睡覺、早上量血壓偏高），讓受眾第一眼就說「這說的就是我！」'},
+    {id:'seasonal',label:'節氣故事連結',p:'將本週節氣或時令的傳統智慧與現代醫學知識結合，創造「老祖宗的智慧原來有科學根據」的驚喜感。'},
+    {id:'both',label:'情境＋節氣（推薦）',p:'結合生活情境與節氣故事，先用日常情境引起共鳴，再以節氣連結增添文化溫度，最自然且最容易引發分享。'}
+  ],
+  styles:[
+    {id:'nature',label:'🌿 自然清新',desc:'米白底色、草綠色系、植物插圖、圓潤字體。溫暖自然，讓人放鬆。',v:'米白（#faf8f3）背景、草綠（#4ade80）強調色、莫蘭迪色調、植物與葉片插圖元素、小杉圓體或 Noto Sans Round，大量留白，版面舒適有呼吸感。'},
+    {id:'warm',label:'☀️ 活力暖色',desc:'橘黃色系、陽光感、充滿正能量。適合運動與積極主題。',v:'暖橘（#fb923c）與鵝黃（#fde68a）主色、活力幾何圖形、圓潤粗體標題，版面動感有活力，適合運動與行動導向主題。'},
+    {id:'ink',label:'🎋 節氣水墨',desc:'淡雅水墨風、中國傳統節氣插圖、知性文化感。適合節氣主題。',v:'宣紙米白底、水墨筆觸插圖、思源宋體標題搭配細黑體內文、以節氣對應的自然元素（梅花、竹葉、荷花等）作為裝飾，具有傳統文化的溫度與知性美感。'},
+    {id:'medical',label:'💙 醫療專業',desc:'藍白乾淨、圖表清晰、權威感強。適合數據與研究引用。',v:'純白底、醫療藍（#0ea5e9）主色、精確數據圖表與資訊圖示、思源黑體、版面工整清晰，適合引用醫學研究或數據時使用。'},
+    {id:'seasonal',label:'🌸 季節限定',desc:'依目前季節自動建議配色，保持視覺新鮮感。',v:'依目前季節選擇配色：春季用粉櫻色系、夏季用清涼藍綠、秋季用楓紅暖棕、冬季用霜白冷灰。搭配對應季節的自然插圖元素，讓受眾感受到與生活節奏同步的視覺溫度。'}
+  ]
+};
+
+let S={theme:null,hook:'both',style:'nature',guideline:false};
+let T={topic:'',season:'',source:'',notes:''};
+
+function buildPrompt(){
+  let p='';
+  p+=`你是一位專業的衛教內容設計師，擅長將醫學知識轉化為中老年慢性病患者（糖尿病、高血壓、Pre-DM）能理解並運用的生活化內容。\n\n`;
+  p+=`# 目標受眾\n中老年慢性病患者與 Pre-DM 族群。語氣必須溫暖親切、不說教、不使用艱深醫學術語，節奏慢且清楚，讓人感到被關心而非被命令。\n\n`;
+  if(T.topic.trim()) p+=`# 本週主題\n「${T.topic.trim()}」\n\n`;
+  if(T.season.trim()) p+=`# 本週時令 / 節氣 / 節慶\n${T.season.trim()}\n\n`;
+  if(T.source.trim()) p+=`# 本週參考來源（請以此為主要內容依據）\n${T.source.trim()}\n請以上述來源為核心發想，確保內容有所本，不自行編造醫學數據。\n\n`;
+  if(S.guideline) p+=`# 引用最新國際指南\n請適當引用美國飲食指南 2025-2030 的核心概念「吃真食物（Eat real food）」及其對代謝健康的建議，以增加內容的國際依據與說服力。\n\n`;
+  const hookObj=CFG.hooks.find(h=>h.id===S.hook);
+  if(hookObj) p+=`# 亮點開場風格\n${hookObj.p}\n\n`;
+  p+=`# 請一次產出以下四個部分，格式清楚分隔：\n\n`;
+  p+=`## 【第一部分：簡報大綱】\n請規劃一份適合中老年受眾的衛教簡報大綱。\n- 每頁以視覺為主，文字控制在 20 字以內\n- 大量留白，圖示說明為主\n- 每頁標註建議的視覺元素（插圖類型、圖表、圖示）\n- 總頁數建議 8-12 頁\n- 格式：投影片 [編號]：[標題] / 核心視覺建議 / 重點文字\n\n`;
+  p+=`## 【第二部分：影片旁白腳本】\n請撰寫一份 3-5 分鐘的衛教影片旁白腳本。\n- 口語化、節奏慢且清楚，適合中老年收聽\n- 每個重點說完後稍作停頓提示（標註「【停頓】」）\n- 避免連續說超過 3 個專業詞彙，遇到專業詞彙立刻用生活化語言解釋\n- 開場使用亮點切入，結尾溫暖收尾並預告下週主題\n\n`;
+  p+=`## 【第三部分：LINE 互動貼文】\n請撰寫一則適合發佈在 LINE 社群的衛教互動貼文。\n- 語氣親切溫暖，像朋友分享而非醫師指導\n- 開頭標註本週時令或節氣（如：【4/5 清明衛教時間】）\n- 善用 emoji 增加閱讀趣味，但不過度\n- 引導受眾觀看影片，並預告後面有互動題目\n- 語氣範例：親切、帶點生活感、讓人忍不住想傳給家人\n\n`;
+  p+=`## 【第四部分：Q&A 填空互動題】\n請設計 2 題填空互動題，放在 LINE 貼文最後。\n- 難度設定：看完影片一定答得出來（鼓勵型，不是考試）\n- 格式：填空題，每題留 2-3 個空格\n- 題目要讓人有成就感，看完想說「我答對了！」\n- 格式範例：\nQ1. ＿＿＿ 是控制血糖最重要的第一步\n1. ＿＿＿\n2. 固定用餐時間\n3. ＿＿＿\n\n`;
+  if(T.notes.trim()) p+=`# 補充指示\n${T.notes.trim()}\n\n`;
+  const styleObj=CFG.styles.find(s=>s.id===S.style);
+  if(styleObj){
+    p+=`# 視覺設計規格\n本週畫風：${styleObj.label}\n${styleObj.v}\n整份簡報的色彩、字體、版面風格必須統一。\n`;
+  }
+  document.getElementById('prompt-output').textContent=p.trim();
+  buildVideoPrompt();
+  buildSlidesPrompt();
+}
+
+function buildVideoPrompt(){
+  const topic = T.topic.trim() || '本週衛教主題';
+  const season = T.season.trim();
+  let v = '';
+  v += `請依據已上傳的簡報內容與頁面順序製作音頻，不要自行增加或省略任何章節。
+
+`;
+  v += `【主題】${topic}
+`;
+  if(season) v += `【時令】請自然帶入「${season}」的氛圍，不要刻意強調
+`;
+  v += `
+【核心精神】這是一次「分享」，不是「衛教」。
+`;
+  v += `想像你是一位朋友，剛好看到一個有趣的新資訊，興奮地想跟對方說：
+`;
+  v += `「欸！我最近發現一件事，跟你說一下...」
+
+`;
+  v += `❌ 絕對禁止：
+`;
+  v += `- 「你應該」「你必須」「一定要」「請注意」
+`;
+  v += `- 命令句、說教語氣、像老師上課的感覺
+`;
+  v += `- 重複強調「這很重要」
+
+`;
+  v += `✅ 請這樣說話：
+`;
+  v += `- 「你知道嗎，原來...」「我最近看到一個很有趣的研究...」
+`;
+  v += `- 「很多人跟我一樣，以前都不知道...」「其實沒有想像中難...」
+`;
+  v += `- 遇到專業詞彙，立刻用生活比喻帶過，不解釋太多
+`;
+  v += `- 節奏自然放慢，像朋友聊天的速度
+`;
+  v += `- 結尾像道別，不像下課：「好啦，就分享到這裡，希望對你有幫助～」
+`;
+  document.getElementById('video-output').textContent = v.trim();
+}
+
+function buildSlidesPrompt(){
+  const topic = T.topic.trim() || '本週衛教主題';
+  const season = T.season.trim();
+  const styleObj = CFG.styles.find(s=>s.id===S.style);
+  let s = '';
+  s += `請製作一份適合中老年慢性病患者的衛教簡報，請著重以下重點：
+
+`;
+  s += `1. 【主題】${topic}
+`;
+  if(season) s += `2. 【時令元素】請在適當頁面融入「${season}」的視覺元素或文化意象
+`;
+  s += `3. 【版面設計】每頁文字控制在 20 字以內，大量留白，圖示說明為主
+`;
+  s += `4. 【字體大小】標題至少 36pt，內文至少 24pt，確保中老年人能清楚閱讀
+`;
+  s += `5. 【色彩對比】背景與文字對比度要高，避免使用過淺或過花的配色
+`;
+  s += `6. 【視覺元素】每頁搭配一個清楚的插圖或圖示，幫助理解核心概念
+`;
+  s += `7. 【頁數】建議 8-12 頁，不要超過 15 頁
+`;
+  if(styleObj) s += `8. 【整體風格】${styleObj.label}：${styleObj.v}
+`;
+  document.getElementById('slides-output').textContent = s.trim();
+}
+
+function toggleGuideline(){
+  S.guideline=!S.guideline;
+  document.getElementById('guideline-btn').classList.toggle('active',S.guideline);
+  buildPrompt();
+}
+
+function renderThemes(){
+  const grid=document.getElementById('theme-grid');grid.innerHTML='';
+  CFG.themes.forEach(t=>{
+    const card=document.createElement('button');
+    card.className=`theme-btn ${S.theme===t.id?'active':''}`;
+    card.innerHTML=`<div class="tt">${t.title}</div><div class="td">${t.desc}</div>`;
+    card.onclick=()=>{
+      S.theme=S.theme===t.id?null:t.id;
+      if(S.theme){const inp=document.getElementById('inp-topic');if(!inp.value.trim()){inp.value=t.topic;T.topic=t.topic;}}
+      renderThemes();buildPrompt();
+    };
+    grid.appendChild(card);
+  });
+}
+
+function renderHooks(){
+  const el=document.getElementById('grp-hook');el.innerHTML='';
+  CFG.hooks.forEach(item=>{
+    const btn=document.createElement('button');
+    btn.className=`sel-btn ${S.hook===item.id?'active':''}`;
+    btn.textContent=item.label;
+    btn.onclick=()=>{S.hook=item.id;renderHooks();buildPrompt();};
+    el.appendChild(btn);
+  });
+}
+
+function renderStyles(){
+  const grid=document.getElementById('style-grid');grid.innerHTML='';
+  CFG.styles.forEach(style=>{
+    const card=document.createElement('button');
+    card.className=`theme-btn ${S.style===style.id?'active':''}`;
+    card.innerHTML=`<div class="tt">${style.label}</div><div class="td">${style.desc}</div>`;
+    card.onclick=()=>{S.style=style.id;renderStyles();buildPrompt();};
+    grid.appendChild(card);
+  });
+}
+
+document.getElementById('guideline-btn').addEventListener('click',toggleGuideline);
+const inputMap={'inp-topic':'topic','inp-season':'season','inp-source':'source','inp-notes':'notes'};
+Object.keys(inputMap).forEach(id=>{
+  document.getElementById(id).addEventListener('input',e=>{
+    T[inputMap[id]]=e.target.value;
+    if(id==='inp-topic'){S.theme=null;renderThemes();}
+    buildPrompt();
+  });
+});
+function makeCopyHandler(btnId, sourceId){
+  document.getElementById(btnId).addEventListener('click',()=>{
+    const text=document.getElementById(sourceId).textContent;
+    navigator.clipboard.writeText(text).catch(()=>{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);});
+    const btn=document.getElementById(btnId);const orig=btn.innerHTML;
+    btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> OK!';
+    setTimeout(()=>{btn.innerHTML=orig;},2000);
+  });
+}
+makeCopyHandler('copy-btn','prompt-output');
+makeCopyHandler('copy-video-btn','video-output');
+makeCopyHandler('copy-slides-btn','slides-output');
+document.getElementById('reset-btn').addEventListener('click',()=>{if(confirm('確定要重置所有設定嗎？'))location.reload();});
+const resizer=document.getElementById('resizer'),leftPanel=document.getElementById('left-panel'),mainEl=document.getElementById('container');
+let isResizing=false;
+resizer.addEventListener('mousedown',()=>{isResizing=true;document.body.style.cursor='col-resize';});
+document.addEventListener('mousemove',e=>{if(!isResizing)return;const rect=mainEl.getBoundingClientRect();const pct=((e.clientX-rect.left)/rect.width)*100;if(pct>=20&&pct<=80)leftPanel.style.flexBasis=pct+'%';});
+document.addEventListener('mouseup',()=>{isResizing=false;document.body.style.cursor='default';});
+renderThemes();renderHooks();renderStyles();buildPrompt();
+</script>
+</body>
+</html>
