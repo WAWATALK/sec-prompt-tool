@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>衛教內容產生器 v1.0.7 — by 資安小麻雀</title>
+<title>衛教內容產生器 v1.0.8 — by 資安小麻雀</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-size:11pt;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;height:100vh;display:flex;flex-direction:column;background:#f8fafc;color:#1e293b;overflow:hidden;}
@@ -66,7 +66,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
     <h1 style="font-size:13pt;font-weight:900;color:#1e293b;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
       <span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:4px;font-size:10.5pt;letter-spacing:-.05em;">🌿</span>
       衛教內容產生器
-      <span style="font-size:10pt;color:#94a3b8;font-weight:400;">v1.0.7</span>
+      <span style="font-size:10pt;color:#94a3b8;font-weight:400;">v1.0.8</span>
       <span style="font-size:10pt;color:#10b981;font-weight:600;">by 資安小麻雀</span>
       <span class="inline-flex items-center" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;border-radius:9999px;padding:1px 8px;font-size:9.5pt;font-weight:600;">生活型態醫學</span>
     </h1>
@@ -96,19 +96,19 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px;">
               <span style="background:#1e293b;color:#34d399;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">2</span>
-              <span style="font-size:10pt;color:#94a3b8;">複製 <span style="color:#34d399;font-weight:700;">📋 Prompt</span> → 貼到聊天對話 → 產出內容架構</span>
+              <span style="font-size:10pt;color:#94a3b8;">複製 <span style="color:#34d399;font-weight:700;">📋 說明要建立的簡報</span> → 貼到聊天對話 → 自動產出簡報與逐頁講稿</span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px;">
               <span style="background:#1e293b;color:#22d3ee;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">3</span>
-              <span style="font-size:10pt;color:#94a3b8;">複製 <span style="color:#22d3ee;font-weight:700;">📝 影片腳本</span> → <span style="color:#fbbf24;">自己審核修改</span>，確認語氣與內容正確</span>
+              <span style="font-size:10pt;color:#94a3b8;">輸出簡報 PDF → <span style="color:#fbbf24;font-weight:700;">清除所有來源</span>，只選用簡報作為唯一來源</span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px;">
               <span style="background:#1e293b;color:#fb923c;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">4</span>
-              <span style="font-size:10pt;color:#94a3b8;">點選「Audio Overview（影片）」→ <span style="color:#fbbf24;font-weight:700;">選擇「詳細說明」</span> → 複製 <span style="color:#fb923c;font-weight:700;">🎬 影片聲音指令</span> 貼入 → 產出影片</span>
+              <span style="font-size:10pt;color:#94a3b8;">點選「Audio Overview（影片）」→ 複製 <span style="color:#fb923c;font-weight:700;">🎬 AI 主持人指令</span> 貼入「自訂」→ 視覺風格選【經典】→ 產出影片</span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px;">
               <span style="background:#1e293b;color:#818cf8;font-size:9pt;font-weight:700;padding:2px 7px;border-radius:9999px;white-space:nowrap;">5</span>
-              <span style="font-size:10pt;color:#64748b;">（選用）需要簡報時，複製 <span style="color:#818cf8;font-weight:700;">📊 簡報摘要指令</span> → 貼到 Slides</span>
+              <span style="font-size:10pt;color:#94a3b8;">將簡報中的 <span style="color:#818cf8;font-weight:700;">QA 挖空題</span> 複製 → 透過 LINE 與觀眾分享互動</span>
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         <div class="grid grid-cols-1 gap-2" style="margin-bottom:1.5rem;" id="style-grid"></div>
 
         <div style="text-align:center;padding:1rem 0;border-top:1px solid #f1f5f9;">
-          <p style="font-size:9.5pt;color:#94a3b8;">衛教內容產生器 v1.0.7 &nbsp;·&nbsp; by <span style="color:#10b981;font-weight:600;">資安小麻雀 🐦</span></p>
+          <p style="font-size:9.5pt;color:#94a3b8;">衛教內容產生器 v1.0.8 &nbsp;·&nbsp; by <span style="color:#10b981;font-weight:600;">資安小麻雀 🐦</span></p>
         </div>
 
       </div>
@@ -178,47 +178,31 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         </span>
       </div>
     </div>
-    <!-- 上中下三區塊 -->
+    <!-- 兩區塊 -->
     <div class="flex-grow flex flex-col overflow-hidden" style="gap:1px;background:#334155;">
 
-      <!-- 上：Main Prompt -->
+      <!-- 上：說明要建立的簡報 -->
       <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
         <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
           <div class="flex items-center gap-2">
-            <span style="font-size:10pt;font-weight:700;color:#34d399;">📋 Prompt</span>
+            <span style="font-size:10pt;font-weight:700;color:#34d399;">📋 說明要建立的簡報</span>
             <span style="font-size:9pt;color:#64748b;">— 貼到聊天對話</span>
           </div>
-          <button id="copy-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#059669;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
+          <button id="copy-slides-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#059669;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
           </button>
         </div>
         <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
-          <pre id="prompt-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(167,243,208,.9);"></pre>
+          <pre id="slides-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(167,243,208,.9);"></pre>
         </div>
       </div>
 
-      <!-- 中上：Script -->
+      <!-- 下：AI 主持人指令 -->
       <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
         <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
           <div class="flex items-center gap-2">
-            <span style="font-size:10pt;font-weight:700;color:#22d3ee;">📝 影片腳本</span>
-            <span style="font-size:9pt;color:#64748b;">— 審核修改後貼回 NotebookLM</span>
-          </div>
-          <button id="copy-script-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#0891b2;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
-          </button>
-        </div>
-        <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
-          <pre id="script-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(103,232,249,.9);"></pre>
-        </div>
-      </div>
-
-      <!-- 中下：Video -->
-      <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
-        <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
-          <div class="flex items-center gap-2">
-            <span style="font-size:10pt;font-weight:700;color:#fb923c;">🎬 影片聲音指令</span>
-            <span style="font-size:9pt;color:#64748b;">— 選「詳細說明」→ 貼上指令 → 下載影片 → 下載影片（影片）</span>
+            <span style="font-size:10pt;font-weight:700;color:#fb923c;">🎬 AI 主持人應著重哪些部分？</span>
+            <span style="font-size:9pt;color:#64748b;">— 貼入 Audio Overview「自訂」欄位</span>
           </div>
           <button id="copy-video-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#ea580c;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
@@ -226,22 +210,6 @@ hr.zone-div{border:none;border-top:2px dashed #e2e8f0;margin:18px 0;}
         </div>
         <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
           <pre id="video-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(253,186,116,.9);"></pre>
-        </div>
-      </div>
-
-      <!-- 下：Slides -->
-      <div class="flex flex-col overflow-hidden" style="flex:1;background:#0f172a;">
-        <div class="flex items-center justify-between shrink-0" style="padding:.375rem .75rem;background:#1e293b;border-bottom:1px solid #334155;">
-          <div class="flex items-center gap-2">
-            <span style="font-size:10pt;font-weight:700;color:#818cf8;">📊 簡報摘要指令</span>
-            <span style="font-size:9pt;color:#64748b;">— 選用，貼到 Slides</span>
-          </div>
-          <button id="copy-slides-btn" class="flex items-center gap-1" style="font-size:9.5pt;font-weight:700;background:#4f46e5;color:#fff;padding:3px 12px;border-radius:6px;border:none;cursor:pointer;text-transform:uppercase;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
-          </button>
-        </div>
-        <div class="overflow-y-auto scrollbar-thin" style="flex:1;padding:.75rem 1rem;">
-          <pre id="slides-output" class="whitespace-pre-wrap font-mono leading-relaxed" style="font-size:10pt;color:rgba(165,180,252,.9);"></pre>
         </div>
       </div>
 
@@ -284,89 +252,10 @@ let S={theme:null,audience:'general',hook:'both',style:'nature',guideline:false}
 let T={topic:'',season:'',source:'',notes:''};
 
 function buildPrompt(){
-  let p='';
-  p+=`你是一位專業的衛教內容設計師，擅長將醫學知識轉化為中老年慢性病患者（糖尿病、高血壓、Pre-DM）能理解並運用的生活化內容。\n\n`;
-  p+=`# 目標受眾\n中老年慢性病患者與 Pre-DM 族群。語氣必須溫暖親切、不說教、不使用艱深醫學術語，節奏慢且清楚，讓人感到被關心而非被命令。\n\n`;
-  if(T.topic.trim()) p+=`# 本週主題\n「${T.topic.trim()}」\n\n`;
-  if(T.season.trim()) p+=`# 本週時令 / 節氣 / 節慶\n${T.season.trim()}\n\n`;
-  if(T.source.trim()) p+=`# 本週參考來源（請以此為主要內容依據）\n${T.source.trim()}\n請以上述來源為核心發想，確保內容有所本，不自行編造醫學數據。\n\n`;
-  if(S.guideline) p+=`# 引用最新國際指南\n請適當引用美國飲食指南 2025-2030 的核心概念「吃真食物（Eat real food）」及其對代謝健康的建議，以增加內容的國際依據與說服力。\n\n`;
-  const hookObj=CFG.hooks.find(h=>h.id===S.hook);
-  if(hookObj) p+=`# 亮點開場風格\n${hookObj.p}\n\n`;
-  p+=`# 請一次產出以下四個部分，格式清楚分隔：\n\n`;
-  p+=`## 【第一部分：簡報大綱】\n請規劃一份適合中老年受眾的衛教簡報大綱。\n- 每頁以視覺為主，文字控制在 20 字以內\n- 大量留白，圖示說明為主\n- 每頁標註建議的視覺元素（插圖類型、圖表、圖示）\n- 總頁數建議 8-12 頁\n- 格式：投影片 [編號]：[標題] / 核心視覺建議 / 重點文字\n\n`;
-  p+=`## 【第二部分：影片旁白腳本】\n請撰寫一份 3-5 分鐘的衛教影片旁白腳本。\n- 口語化、節奏慢且清楚，適合中老年收聽\n- 每個重點說完後稍作停頓提示（標註「【停頓】」）\n- 避免連續說超過 3 個專業詞彙，遇到專業詞彙立刻用生活化語言解釋\n- 開場使用亮點切入，結尾溫暖收尾並預告下週主題\n\n`;
-  p+=`## 【第三部分：LINE 互動貼文】\n請撰寫一則適合發佈在 LINE 社群的衛教互動貼文。\n- 語氣親切溫暖，像朋友分享而非醫師指導\n- 開頭標註本週時令或節氣（如：【4/5 清明衛教時間】）\n- 善用 emoji 增加閱讀趣味，但不過度\n- 引導受眾觀看影片，並預告後面有互動題目\n- 語氣範例：親切、帶點生活感、讓人忍不住想傳給家人\n\n`;
-  p+=`## 【第四部分：Q&A 填空互動題】\n請設計 2 題填空互動題，放在 LINE 貼文最後。\n- 難度設定：看完影片一定答得出來（鼓勵型，不是考試）\n- 格式：填空題，每題留 2-3 個空格\n- 題目要讓人有成就感，看完想說「我答對了！」\n- 格式範例：\nQ1. ＿＿＿ 是控制血糖最重要的第一步\n1. ＿＿＿\n2. 固定用餐時間\n3. ＿＿＿\n\n`;
-  if(T.notes.trim()) p+=`# 補充指示\n${T.notes.trim()}\n\n`;
-  const styleObj=CFG.styles.find(s=>s.id===S.style);
-  if(styleObj){
-    p+=`# 視覺設計規格\n本週畫風：${styleObj.label}\n${styleObj.v}\n整份簡報的色彩、字體、版面風格必須統一。\n`;
-  }
-  document.getElementById('prompt-output').textContent=p.trim();
-  buildScriptPrompt();
-  buildVideoPrompt();
   buildSlidesPrompt();
+  buildVideoPrompt();
 }
 
-function buildScriptPrompt(){
-  const topic = T.topic.trim() || '本週主題';
-  const season = T.season.trim();
-  const audObj = CFG.audiences.find(a=>a.id===S.audience);
-  let s = '';
-  s += `請根據來源文件，為以下主題撰寫一份完整的影片旁白腳本：
-
-`;
-  s += `【主題】${topic}
-`;
-  if(season) s += `【時令】${season}
-`;
-  if(audObj) s += `【受眾設定】${audObj.p}
-`;
-  s += `
-【腳本格式】
-`;
-  s += `【開場】（30秒）
-`;
-  s += `用生活情境或有趣的問題開場，讓人想繼續聽
-
-`;
-  s += `【第一段】主題帶入
-`;
-  s += `旁白：「...」
-
-`;
-  s += `【第二段】核心概念
-`;
-  s += `旁白：「...」
-
-`;
-  s += `【第三段】實際應用
-`;
-  s += `旁白：「...」
-
-`;
-  s += `【結尾】（30秒）
-`;
-  s += `溫暖收尾，像朋友道別
-
-`;
-  s += `【腳本要求】
-`;
-  s += `- 引用真實研究數據或科學發現，增加可信度
-`;
-  s += `- 把複雜概念用生活語言說清楚，但不過度簡化
-`;
-  s += `- 把受眾當有智慧的成年人，不要說教
-`;
-  s += `- 語氣像朋友分享，不像醫師衛教
-`;
-  s += `- 全程禁止「你應該」「你必須」「一定要」
-`;
-  s += `- 總長度約 3-5 分鐘的朗讀量
-`;
-  document.getElementById('script-output').textContent = s.trim();
-}
 
 function buildVideoPrompt(){
   const topic = T.topic.trim() || '本週衛教主題';
@@ -417,6 +306,7 @@ function buildSlidesPrompt(){
   const topic = T.topic.trim() || '本週衛教主題';
   const season = T.season.trim();
   const styleObj = CFG.styles.find(s=>s.id===S.style);
+  const audObj = CFG.audiences.find(a=>a.id===S.audience);
   let s = '';
   s += `請製作一份分享美好生活方式的簡報，讓每個人看了都覺得「我也想這樣做」，請著重以下重點：
 
@@ -425,7 +315,7 @@ function buildSlidesPrompt(){
 `;
   if(season) s += `2. 【時令元素】請在適當頁面融入「${season}」的視覺元素或文化意象
 `;
-  s += `3. 【版面設計】每頁文字控制在 20 字以內，大量留白，圖示說明為主
+  s += `3. 【版面設計】每頁文字控制在 200 字以內，圖示需有說明
 `;
   s += `4. 【字體大小】標題至少 36pt，內文至少 24pt，清楚易讀
 `;
@@ -435,7 +325,24 @@ function buildSlidesPrompt(){
 `;
   s += `7. 【頁數】建議 8-12 頁，不要超過 15 頁
 `;
-  if(styleObj) s += `8. 【整體風格】${styleObj.label}：${styleObj.v}
+  s += `8. 【語言】中文，長度預設，並產出逐頁講稿
+`;
+  if(audObj) s += `9. 【受眾設定】${audObj.p}
+`;
+  if(styleObj) s += `10. 【整體風格】${styleObj.label}：${styleObj.v}
+`;
+  s += `
+---
+
+請同時在簡報最後產出 2 題與本次內容相關的 QA 挖空題，供 LINE 與觀眾互動使用：
+- 難度設定：看完簡報一定答得出來（鼓勵型，不是考試）
+- 格式：填空題，每題留 2-3 個空格
+- 讓人看完有成就感，想說「我答對了！」
+格式範例：
+Q1. _____ 是維持健康最重要的一步
+  1. _____
+  2. 固定作息
+  3. _____
 `;
   document.getElementById('slides-output').textContent = s.trim();
 }
@@ -514,10 +421,8 @@ function makeCopyHandler(btnId, sourceId){
     setTimeout(()=>{btn.innerHTML=orig;},2000);
   });
 }
-makeCopyHandler('copy-btn','prompt-output');
-makeCopyHandler('copy-script-btn','script-output');
-makeCopyHandler('copy-video-btn','video-output');
 makeCopyHandler('copy-slides-btn','slides-output');
+makeCopyHandler('copy-video-btn','video-output');
 document.getElementById('reset-btn').addEventListener('click',()=>{if(confirm('確定要重置所有設定嗎？'))location.reload();});
 const resizer=document.getElementById('resizer'),leftPanel=document.getElementById('left-panel'),mainEl=document.getElementById('container');
 let isResizing=false;
@@ -528,3 +433,4 @@ renderAudience();renderThemes();renderHooks();renderStyles();buildPrompt();
 </script>
 </body>
 </html>
+
